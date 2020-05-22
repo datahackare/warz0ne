@@ -7,7 +7,6 @@
     <span>© {{ currentyear }}<br></a><p font-size:small;><em>Theme by <a href="https://github.com/tocttou">tocttou</a></em></p></span>
 
 
-
 <style>
 table, th, td {
   border: 0px solid black;
@@ -16,14 +15,15 @@ table, th, td {
 <table>
   <tr>
 
-    <td><a href="https://creativecommons.org/licenses/by-nc/3.0/deed.en_US">
+    <th><a href="https://creativecommons.org/licenses/by-nc/3.0/deed.en_US">
     <span>
         <b>{{ site.owner}}</b>
     </span>
     {% capture currentyear %}{{ 'now' | date: "%Y" }}{% endcapture %}
     <span>© {{ currentyear }}</a></th>
-  </td>
-  <tr>
-    <td><em>Theme by <a href="https://github.com/tocttou">tocttou</a></em></td>
+  
+  <th>
+   <em>Theme by <a href="https://github.com/tocttou">tocttou</a></em></th>
+   </tr>
 </table>
   </footer>
