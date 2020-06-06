@@ -14,6 +14,6 @@ I have been working with digital foreniscs for the past 6 years, but i have not 
 
 |                     |              | 
 | :------------------:| :----------: | 
-| <script src="https://www.hackthebox.eu/badge/44591"></script> | <a href="https://www.hackthebox.eu/profile/44591">Link </a>to profile |
+| <script src="https://www.hackthebox.eu/badge/44591"></script> | <a href="https://www.hackthebox.eu/profile/44591">Link</a> to profile |
 
 
