@@ -8,7 +8,7 @@ This site is a way for me to save things online so i can go back to look at them
 
 I have been working with digital foreniscs for the past 6 years, but i have not so much experience with pentesting, so please feel free to correct me if i explain anything in a strange och wrong way. Im just trying to learn here.
 
-         |              
+ []()    |              
  ------  | ------  
  <script src="https://www.hackthebox.eu/badge/44591"></script> | <a href="https://www.hackthebox.eu/profile/44591">Link </a>to profile
 
