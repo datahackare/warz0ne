@@ -8,7 +8,7 @@ This site is a way for me to save things online so I can go back to look at them
 
 I have been working with digital forensics for the past 6 years, but I have not so much experience with pentesting. So please feel free to correct me if I explain anything in a strange/wrong way. 
 Im just trying to learn here... ;)
-</ br><a href="mailto:datahackare@disroot.org">Contact me!</a>
+<a href="mailto:datahackare@disroot.org">Contact me!</a>
 <script src="https://www.hackthebox.eu/badge/44591"></script> 
 
 
