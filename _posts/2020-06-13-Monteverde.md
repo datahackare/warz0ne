@@ -65,6 +65,7 @@ smbmap -u SABatchJobs -p SABatchJobs -H 10.10.10.172
 ```
 
 ![](Pictures/Monteverde/smbmap.png)
+
 Here I got some shares. I tried to login to everyone of them that
 I had access to read.
 
@@ -108,13 +109,13 @@ that actually turned out to work in the end.
 
 ### [](#header-3)Azure AD Connect Database Exploit (Priv Esc)
 What I found was a program written by vbscrub that might be the
-solution. Link: https://vbscrub.com/2020/01/14/azure-ad-connect-database-exploit-priv-esc/
+solution. <a href=" https://vbscrub.com/2020/01/14/azure-ad-connect-database-exploit-priv-esc/">Link</a>
 
 ![](Pictures/Monteverde/azure-AD.png)
 
 A bit down on this blogpost is the shellcode for the program and
 also a compiled 3 binary (AdDecrypt). I downloaded the binary.
-Download link: https://github.com/VbScrub/AdSyncDecrypt/releases
+<a href="https://github.com/VbScrub/AdSyncDecrypt/releases">Download link</a>
 
 I uploaded the files AdDecrypt.exe and mcrypt.dll to C:\Users\
 mhope\Documents\.
