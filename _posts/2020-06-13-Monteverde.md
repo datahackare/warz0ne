@@ -33,7 +33,7 @@ nmap -p 389 --script ldap-rootdse -Pn 10.10.10.172
 ```
 
 ![](Pictures/Monteverde/nmap2.png)
-I now got the name of the Domain and hostname.
+<br>I now got the name of the Domain and hostname.
 
 ### [](#header-3)Rpcclient
 I wanted to see if I could login with rpc to get some user account
