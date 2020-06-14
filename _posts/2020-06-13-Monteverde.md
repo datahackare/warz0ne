@@ -109,13 +109,13 @@ that actually turned out to work in the end.
 
 ### [](#header-3)Azure AD Connect Database Exploit (Priv Esc)
 What I found was a program written by vbscrub that might be the
-solution. <a href=" https://vbscrub.com/2020/01/14/azure-ad-connect-database-exploit-priv-esc/">Link</a>
+solution. <a href=" https://vbscrub.com/2020/01/14/azure-ad-connect-database-exploit-priv-esc/" target="_blank">Link</a>
 
 ![](Pictures/Monteverde/azure-AD.png)
 
 A bit down on this blogpost is the shellcode for the program and
 also a compiled 3 binary (AdDecrypt). I downloaded the binary.
-<a href="https://github.com/VbScrub/AdSyncDecrypt/releases">Download link</a>
+<a href="https://github.com/VbScrub/AdSyncDecrypt/releases" target="_blank">Download link</a>
 
 I uploaded the files AdDecrypt.exe and mcrypt.dll to C:\Users\
 mhope\Documents\.
