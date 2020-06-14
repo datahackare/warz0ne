@@ -44,6 +44,7 @@ rpcclient -U ‘’ 10.10.10.172
 ```
 
 ![](Pictures/Monteverde/rpcclient.png)
+
 I got some usernames and I put them in a file, user.txt.
 
 ## [](#header-2)Exploitation
