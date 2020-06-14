@@ -26,7 +26,7 @@ sudo nmap -sS -v -v -Pn 10.10.10.172
 
 ![](Pictures/Monteverde/nmap1.png)
 
-I got results but I wanted some more information from ldap so I did another nmap scan:
+<br>I got results but I wanted some more information from ldap so I did another nmap scan:
 
 ```
 nmap -p 389 --script ldap-rootdse -Pn 10.10.10.172
@@ -66,7 +66,7 @@ smbmap -u SABatchJobs -p SABatchJobs -H 10.10.10.172
 
 ![](Pictures/Monteverde/smbmap.png)
 
-Here I got some shares. I tried to login to everyone of them that
+<br>Here I got some shares. I tried to login to everyone of them that
 I had access to read.
 
 ![](Pictures/Monteverde/smbclient1.png)
