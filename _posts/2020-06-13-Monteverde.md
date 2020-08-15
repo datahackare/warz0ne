@@ -2,6 +2,7 @@
 title: Writeup - HackTheBox - Monteverde
 published: true
 ---
+![](Pictures/Monteverde/logo.png)
 
 This machine from HackTheBox is categorized as an “medium” Windows
 machine.
