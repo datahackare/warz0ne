@@ -160,6 +160,4 @@ Here I got the root.txt flag.
 
 I recorded a video to show this.
 
-
-
-<iframe width="640" height="360" src="https://www.youtube.com/embed/JrVURlg7Ngs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe id="lbry-iframe" width="560" height="315" src="https://lbry.tv/$/embed/HackTheBox---Monteverde/fe56976c89aefceb32b6a0fac1b43f7132b20c65" allowfullscreen></iframe>
