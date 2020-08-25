@@ -11,7 +11,7 @@ Im just trying to learn here... ;)
 <a href="mailto:datahackare@disroot.org">Contact me!</a>
 
 
-
+| ------------------------------------------------------------- | ---------------------------------------------------------- |
 | <script src="https://www.hackthebox.eu/badge/44591"></script> | <script src="https://tryhackme.com/badge/106966"></script> |
 | ------------------------------------------------------------- | ---------------------------------------------------------- |
 
