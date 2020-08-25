@@ -16,6 +16,8 @@ Im just trying to learn here... ;)
 </colgroup>
 <thead>
 <tr class="header">
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
