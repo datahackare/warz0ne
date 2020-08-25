@@ -17,15 +17,16 @@ Im just trying to learn here... ;)
 </colgroup>
 <thead>
 <tr class="header">
-<th> </th>
-<th> </th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td markdown="span"><script src="https://www.hackthebox.eu/badge/44591"></script></td>
 <td markdown="span"><script src="https://tryhackme.com/badge/106966"></script></td>
-<td markdown="span"><script src="https://tryhackme.com/badge/106966"></script></td>
+<td markdown="span"><a href="mailto:datahackare@disroot.org">Contact me!</a></script></td>
 </tr>
 <tr>
 </td>
@@ -33,4 +34,3 @@ Im just trying to learn here... ;)
 </tbody>
 </table>
 
-<a href="mailto:datahackare@disroot.org">Contact me!</a>
