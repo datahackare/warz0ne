@@ -17,9 +17,9 @@ Im just trying to learn here... ;)
 </colgroup>
 <thead>
 <tr class="header">
-<th>1</th>
-<th>2</th>
-<th>3</th>
+<th></th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
