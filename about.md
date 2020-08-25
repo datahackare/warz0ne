@@ -28,9 +28,6 @@ Im just trying to learn here... ;)
 <td markdown="span"><script src="https://tryhackme.com/badge/106966"></script></td>
 <td markdown="span"><a href="mailto:datahackare@disroot.org">Contact me!</a></td>
 </tr>
-<tr>
-</td>
-</tr>
 </tbody>
 </table>
 
