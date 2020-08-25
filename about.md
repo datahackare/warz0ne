@@ -11,8 +11,9 @@ Im just trying to learn here... ;)
 
 <table>
 <colgroup>
-<col width="30%" />
-<col width="70%" />
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -23,6 +24,7 @@ Im just trying to learn here... ;)
 <tbody>
 <tr>
 <td markdown="span"><script src="https://www.hackthebox.eu/badge/44591"></script></td>
+<td markdown="span"><script src="https://tryhackme.com/badge/106966"></script></td>
 <td markdown="span"><script src="https://tryhackme.com/badge/106966"></script></td>
 </tr>
 <tr>
