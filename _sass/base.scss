@@ -56,12 +56,6 @@ header {
   margin: 0 0 40px 0;
 }
 
-.logo {
-  max-width: 100%;
-  height: auto;
-  width: auto;
-}
-
 .header-links {
   text-align: center;
 }
@@ -98,7 +92,12 @@ header h2 {
   width: 100%;
   -webkit-font-smoothing: antialiased;
 }
+
 section img {
+  max-width: 100%
+}
+
+img {
   max-width: 100%
 }
 
