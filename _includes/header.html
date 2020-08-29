@@ -1,9 +1,12 @@
 <header>
   <div>
-    <a href="{{ "/" | prepend: site.baseurl | replace: '//', '/' }}">
+    <!--- <a href="{{ "/" | prepend: site.baseurl | replace: '//', '/' }}">
     {% assign owner_first_name = site.owner | split: " " %}
-    <h1>{{ owner_first_name[0] | downcase }}@warz0ne:~$</h1>
+    <h1>{{ owner_first_name[0] | downcase }}@warz0ne:~$</h1> -->
     </a>
+
+    <div class="header-links">
+      {% include links.html %}
      <pre>
  █     █░ ▄▄▄       ██▀███  ▒███████▒ ▒█████   ███▄    █ ▓█████       ███▄    █ ▓█████▄▄▄█████▓
 ▓█░ █ ░█░▒████▄    ▓██ ▒ ██▒▒ ▒ ▒ ▄▀░▒██▒  ██▒ ██ ▀█   █ ▓█   ▀       ██ ▀█   █ ▓█   ▀▓  ██▒ ▓▒
@@ -16,9 +19,6 @@
     ░          ░  ░   ░       ░ ░        ░ ░           ░    ░  ░  ░           ░    ░  ░        
                             ░                                     ░                            
 </pre>
-    <div class="header-links">
-      {% include links.html %}
-
     </div>
   </div>
 </header>
