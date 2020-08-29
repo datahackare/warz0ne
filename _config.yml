@@ -30,3 +30,6 @@ plugins:
 # Custom variables
 owner : "datahackare"
 year : "2020"
+
+plugins:
+  - jekyll-target-blank
