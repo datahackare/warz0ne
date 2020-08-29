@@ -12,13 +12,11 @@ Email:<a href="mailto:datahackare@disroot.org">datahackare@disroot.org</a>
 
 <table>
 <colgroup>
-<col width="33%" />
-<col width="33%" />
-<col width="33%" />
+<col width="66%" />
+<col width="66%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th></th>
 <th></th>
 <th></th>
 </tr>
