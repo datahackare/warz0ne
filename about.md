@@ -12,8 +12,8 @@ Email:<a href="mailto:datahackare@disroot.org">datahackare@disroot.org</a>
 
 <table>
 <colgroup>
-<col width="66%" />
-<col width="66%" />
+<col width="auto" />
+<col width="auto" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -23,8 +23,8 @@ Email:<a href="mailto:datahackare@disroot.org">datahackare@disroot.org</a>
 </thead>
 <tbody>
 <tr>
-<td markdown="span" max-width: 100%><script src="https://www.hackthebox.eu/badge/44591"></script></td>
-<td markdown="span" max-width: 100%><script src="https://tryhackme.com/badge/106966"></script></td>
+<td markdown="span"><script src="https://www.hackthebox.eu/badge/44591"></script></td>
+<td markdown="span"><script src="https://tryhackme.com/badge/106966"></script></td>
 </tr>
 </tbody>
 </table>
