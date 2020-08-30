@@ -10,5 +10,5 @@ I have been working with digital forensics for the past 6 years, but I have not 
 Im just trying to learn here... ;)<br />
 Email:<a href="mailto:datahackare@disroot.org">datahackare@disroot.org</a>
 
-<script src="https://www.hackthebox.eu/badge/44591" width="250"></script>
-<script src="https://tryhackme.com/badge/106966" width="250"></script>
+<script src="https://www.hackthebox.eu/badge/44591" width="150"></script>
+<script src="https://tryhackme.com/badge/106966" width="150"></script>
