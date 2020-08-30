@@ -10,6 +10,6 @@ I have been working with digital forensics for the past 6 years, but I have not 
 Im just trying to learn here... ;)<br />
 Email:<a href="mailto:datahackare@disroot.org">datahackare@disroot.org</a>
 <div id="test" style="Width:20%">
-<script src="https://www.hackthebox.eu/badge/44591" style="Width:20%"></script>
-<script src="https://tryhackme.com/badge/106966" width="150"></script>
+<script src="https://www.hackthebox.eu/badge/44591"></script>
+<script src="https://tryhackme.com/badge/106966"></script>
 </div>
