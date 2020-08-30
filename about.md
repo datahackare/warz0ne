@@ -11,6 +11,6 @@ Im just trying to learn here... ;)<br />
 Email:<a href="mailto:datahackare@disroot.org">datahackare@disroot.org</a>
 
 
-<script src="https://www.hackthebox.eu/badge/44591"></script>
+<script src="https://www.hackthebox.eu/badge/44591" width="600"></script>
 <script src="https://tryhackme.com/badge/106966"></script>
 
