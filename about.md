@@ -12,23 +12,3 @@ Email:<a href="mailto:datahackare@disroot.org">datahackare@disroot.org</a>
 
 <script src="https://www.hackthebox.eu/badge/44591"></script>
 <script src="https://tryhackme.com/badge/106966"></script>
-
-<table>
-<colgroup>
-<col width="auto" />
-<col width="auto" />
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td markdown="span"><script src="https://www.hackthebox.eu/badge/44591"></script></td>
-<td markdown="span"><script src="https://tryhackme.com/badge/106966"></script></td>
-</tr>
-</tbody>
-</table>
-
