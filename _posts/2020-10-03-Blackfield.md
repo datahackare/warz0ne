@@ -2,7 +2,7 @@
 title: Writeup - HackTheBox - Blackfield
 published: true
 ---
-![](Picture/Blackfield/logo.png)
+![](Pictures/Blackfield/logo.png)
 
 This machine from HackTheBox is categorized as an “hard” Windowsmachine.From the beginning this machine required some enumeration on SMB to get a list of users of the system. With this list I was able todo a ASREPRoast attack. I got a hash for the user support. This user was able to change the password for the user svc_backup, who was in the Remote Management group. The user was also a member of the Backup Operators. With this knowledge I was able to put the user svc_backup into the administrators group and finally login asthe administrator. In the end of this report I will also show an alternative solution where I mount the C: drive as a shadow copy and extract the ntds.dit and SYSTEM files.
 
@@ -16,7 +16,7 @@ the machine.
 nmap -sC -sV -Pn -oA nmap/nmap 10.10.10.192
 ```
 
-![](Picture/Blackfield/nmap1.png)
+![](Pictures/Blackfield/nmap1.png)
 
 I put the domain name BLACKFIELD.local into the /etc/hosts file.
 
@@ -28,7 +28,7 @@ I wanted to get some more information about SMB so I used smbclient like this:
 smbclient -L BLACKFIELD.local
 ```
 
-![](Picture/Blackfield/smbclient1.png)
+![](Pictures/Blackfield/smbclient1.png)
 
 I took a look at the share profiles$ and found a huge amount of folder with names that looked like usernames. I saved all names into a file, user.txt.
 
@@ -43,15 +43,15 @@ I wanted to see if I could get tokens from any users by doing a ASREPRoasting at
 Python GetNPUsers.py BLACKFIELD.local/ -usersfile user.txt -formathashcat -outputfile hashes.asreproast
 ```
 
-![](Picture/Blackfield/getnpusers1.png)
+![](Pictures/Blackfield/getnpusers1.png)
 
 This took a bit of time to run, due to the big list of usernames. When it was done I got the following:
 
-![](Picture/Blackfield/asreproast.png)
+![](Pictures/Blackfield/asreproast.png)
 
 I was able to crack the hash with JohnTheRipper.
 
-![](Picture/Blackfield/john1.png)
+![](Pictures/Blackfield/john1.png)
 
 The password for the user support is #00^BlackKnight.
 
@@ -79,7 +79,7 @@ user:[lydericlefebvre] rid:[0x586]
 
 I added the users to another file, privusers.txt.
 
-![](Picture/Blackfield/privusers.png)
+![](Pictures/Blackfield/privusers.png)
 
 The account I am using with rpcclient is named support. What I read online is that accounts that is used by IT, helpdesk, supportetc often have some administrative privileges. What I could see from the privileges on the account support, this might be the caseeven here.
 
@@ -114,7 +114,7 @@ So after a bit of testing different things I took a look at the SMB enumeration 
 Smbclient -U audit2020 //10.10.10.192/forensic
 ```
 
-![](Picture/Blackfield/smbclient2.png)
+![](Pictures/Blackfield/smbclient2.png)
 
 On my Kali machine I created a folder, SMB, and a folder inside called forensic. Then I mounted the forensic share and copied all the files to my local machine.
 
@@ -128,7 +128,7 @@ rsync -r --progress /mnt/temp/* .
 
 Inside of the folder forensic/memory_analysis i found the following files:
 
-![](Picture/Blackfield/content1.png)
+![](Pictures/Blackfield/content1.png)
 
 There is one file that look more interesting then the others, lsass.zip, so I unzipped it.
 
@@ -145,7 +145,7 @@ I used pypykatz to try to get something useful out of it.
 Pypykatz lsa minidump lsass.DMP
 ```
 
-![](Picture/Blackfield/lsass1.png)
+![](Pictures/Blackfield/lsass1.png)
 
 There is much information, but I only found the hash for the account svc_backup useful. With an NT hash there is a possibility to crack it or to it as pass-the-hash.After alot of testing with different things I found out that svc_backup is a member of the Remote Management Group (found this out using bloodhound)
 
@@ -161,7 +161,7 @@ I tried to log with evil-winrm.
 evil-winrm -u svc_backup -H 9658d1d1dcd9250115e2205d9f48400d -i 10.10.10.192
 ```
 
-![](Picture/Blackfield/evil1.png)
+![](Pictures/Blackfield/evil1.png)
 
 And I was able to get the user.txt flag.
 
@@ -174,7 +174,7 @@ I did some enumeration with the current user svc_backup.
 whoami /all
 ```
 
-![](Picture/Blackfield/groups.png)
+![](Pictures/Blackfield/groups.png)
 
 I saw that the user svc_backup is a member of the Backup Operatorsgroup. This means that the user probably can change any file on the system. So what i did next was trying to get my self more privileges.
 
@@ -190,7 +190,7 @@ If I could change this file and put the account svc_backup into the administrato
 Net localgroup administrators
 ```
 
-![](Picture/Blackfield/netlocal.png)
+![](Pictures/Blackfield/netlocal.png)
 
 
 The account svc_backup is not a member of the administrators group, yet.
@@ -232,7 +232,7 @@ Then I ran the localgroup command again.
 Net localgroup administrators
 ```
 
-![](Picture/Blackfield/netlocal2.png)
+![](Pictures/Blackfield/netlocal2.png)
 
 Now the user svc_backup is a member of the administrators group.
 
@@ -247,7 +247,7 @@ I upload the tool with evil-winrm and ran it like this:
 .\procdump.exe -ma lsass.exe C:\Users\svc_backup\Documents\lsass.dmp
 ```
 
-![](Picture/Blackfield/procdump.png)
+![](Pictures/Blackfield/procdump.png)
 
 I got an successful dump and downloaded it to my Kali machine. Andthen I ran pypykatz to get something useful out of it.
 
@@ -255,7 +255,7 @@ I got an successful dump and downloaded it to my Kali machine. Andthen I ran pyp
 Pypykatz lsa minidump lsass.dmp
 ```
 
-![](Picture/Blackfield/pypykatz1.png)
+![](Pictures/Blackfield/pypykatz1.png)
 
 The output gave much data but there was the administrators NT hashand a cleartext password: 
 
@@ -271,7 +271,7 @@ I was now able to login as the administrator with evil-winrm and read the root.t
 evil-winrm -u administrator -p '###_ADM1N_3920_###' -i 10.10.10.192
 ```
 
-![](Picture/Blackfield/evil2.png)
+![](Pictures/Blackfield/evil2.png)
 
 
 
@@ -293,7 +293,7 @@ LINK TO THIS: 0xprashant github – http://0xprashant.github.io
 
 For some reason you have to put a random char at the end of each line because the last char will be deleted?! In my example I put an “r”.
 
-![](Picture/Blackfield/evil3.png)
+![](Pictures/Blackfield/evil3.png)
 
 To mount the C: drive use the following command:
 
@@ -301,7 +301,7 @@ To mount the C: drive use the following command:
 diskshadow /s script.txt
 ```
 
-![](Picture/Blackfield/evil4.png)
+![](Pictures/Blackfield/evil4.png)
 
 When the disk is mounted, in this case O: you can copy the ntds.dit file with robocopy.exe. Robocopy seems to be a standard tool in Windows since Windows Vista.
 
@@ -327,10 +327,10 @@ robocopy.exe "O:\Windows\system32\config" "C:\Windows\Temp" SYSTEM/b
 Download the ntds.dit and the SYSTEM file to the local Kali machine.
 
 
-![](Picture/Blackfield/evil5.png)
+![](Pictures/Blackfield/evil5.png)
 
 
-![](Picture/Blackfield/evil6.png)
+![](Pictures/Blackfield/evil6.png)
 
 When you have both files downloaded there is a python script, secretsdump.py, that can get the hashes from the dit file with help from the boot-key from the SYSTEMFILE.
 
@@ -338,7 +338,7 @@ When you have both files downloaded there is a python script, secretsdump.py, th
 python secretsdump.py -ntds ntds.dit -system system -hashes lmhash:nthash LOCAL -output nt-hash > hashes.txt
 ```
 
-![](Picture/Blackfield/secretsdump1.png)
+![](Pictures/Blackfield/secretsdump1.png)
 
 Now you will get all hashes from all the users from the Domain Controller. The last step is to log in as the Administrator using pass-the-hash with Evil-WinRM.
 
@@ -346,7 +346,7 @@ Now you will get all hashes from all the users from the Domain Controller. The l
 evil-winrm -u administrator -H 184fb5e5178480be64824d4cd53b99ee -i10.10.10.192
 ```
 
-![](Picture/Blackfield/evil7.png)
+![](Pictures/Blackfield/evil7.png)
 
 
 
