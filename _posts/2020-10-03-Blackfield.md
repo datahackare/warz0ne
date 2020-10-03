@@ -45,7 +45,7 @@ Python GetNPUsers.py BLACKFIELD.local/ -usersfile user.txt -formathashcat -outpu
 
 This took a bit of time to run, due to the big list of usernames. When it was done I got the following:
 
-![](Pictures/Blackfield/asreproast.png)
+![](Pictures/Blackfield/asreproast1.png)
 
 I was able to crack the hash with JohnTheRipper.
 
