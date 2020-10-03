@@ -4,7 +4,7 @@ published: true
 ---
 ![](Pictures/Blackfield/logo.png)
 
-This machine from HackTheBox is categorized as an “hard” Windowsmachine.From the beginning this machine required some enumeration on SMB to get a list of users of the system. With this list I was able todo a ASREPRoast attack. I got a hash for the user support. This user was able to change the password for the user svc_backup, who was in the Remote Management group. The user was also a member of the Backup Operators. With this knowledge I was able to put the user svc_backup into the administrators group and finally login asthe administrator. In the end of this report I will also show an alternative solution where I mount the C: drive as a shadow copy and extract the ntds.dit and SYSTEM files.
+This machine from HackTheBox is categorized as an “hard” Windows machine. From the beginning this machine required some enumeration on SMB to get a list of users of the system. With this list I was able todo a ASREPRoast attack. I got a hash for the user support. This user was able to change the password for the user svc_backup, who was in the Remote Management group. The user was also a member of the Backup Operators. With this knowledge I was able to put the user svc_backup into the administrators group and finally login as the administrator. In the end of this report I will also show an alternative solution where I mount the C: drive as a shadow copy and extract the ntds.dit and SYSTEM files.
 
 ## [](#header-2)Enumeration
 
@@ -55,7 +55,7 @@ The password for the user support is #00^BlackKnight.
 
 ### [](#header-3)Rpcclient
 
-I was able to use the creds for the support account and log in with the rpcclient. Then I ran the command, enumdomusers, to get alist of all usernames on the domain.The list was huge, because it was so many users on the domain. Here is the users that I found more interesting, probably more privileged users.
+I was able to use the creds for the support account and log in with the rpcclient. Then I ran the command, enumdomusers, to get alist of all usernames on the domain. The list was huge, because it was so many users on the domain. Here is the users that I found more interesting, probably more privileged users.
 
 ```
 rpcclient -U support 10.10.10.192
@@ -124,7 +124,7 @@ SeCreateSymbolicLinkPrivilege           0:35 (0x0:0x23)
 SeDelegateSessionUserImpersonatePrivilege               0:36 (0x0:0x24)
 ```
 
-If this is the case then maybe I can change password for some other users, according to <a href="https://malicious.link/post/2017/reset-ad-user-password-with-linux">mubix blog-post</a>. So I tried changing the password for the high privileged accounts,until I found that it worked on the audit2020 account:
+If this is the case then maybe I can change password for some other users, according to <a href="https://malicious.link/post/2017/reset-ad-user-password-with-linux">mubix blog-post</a>. So I tried changing the password for the high privileged accounts, until I found that it worked on the audit2020 account:
 
 ```
 set userinfo2 audit2020 23 ‘TestTest123!’
@@ -134,7 +134,7 @@ The password needs to be a bit complex to get this to work. This according to th
 
 ### [](#header-3)Forensic SMB share
 
-So after a bit of testing different things I took a look at the SMB enumeration from earlier. There is a share called forensic.I logged in and listed the content with the user audit2020.
+So after a bit of testing different things I took a look at the SMB enumeration from earlier. There is a share called forensic. I logged in and listed the content with the user audit2020.
 
 ```
 Smbclient -U audit2020 //10.10.10.192/forensic
@@ -172,7 +172,7 @@ Pypykatz lsa minidump lsass.DMP
 
 ![](Pictures/Blackfield/lsass1.png)
 
-There is much information, but I only found the hash for the account svc_backup useful. With an NT hash there is a possibility to crack it or to it as pass-the-hash.After alot of testing with different things I found out that svc_backup is a member of the Remote Management Group (found this out using bloodhound)
+There is much information, but I only found the hash for the account svc_backup useful. With an NT hash there is a possibility to crack it or to it as pass-the-hash. After alot of testing with different things I found out that svc_backup is a member of the Remote Management Group (found this out using bloodhound)
 
 ## [](#header-2)Exploitation
 
@@ -206,7 +206,7 @@ Inside of the following folder is a file that controls the privileges on the dom
 
 C:\Windows\SYSVOL\domain\policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}\machine\microsoft\windows nt\secedit\
 
-If I could change this file and put the account svc_backup into the administrators group then I should be able to dump lsass.exe.I checked who was the members in the administrators group.
+If I could change this file and put the account svc_backup into the administrators group then I should be able to dump lsass.exe. I checked who was the members in the administrators group.
 
 ```
 Net localgroup administrators
@@ -332,7 +332,7 @@ evil-winrm -u administrator -p '###_ADM1N_3920_###' -i 10.10.10.192
 
 ## [](#header-2)Alterative solution
 
-Mounting the system drive as shadow copy and extract the ntds.dit and SYSTEM files.Before I wrote this segment I did a reset of the machine to get rid of my administrative privileges.
+Mounting the system drive as shadow copy and extract the ntds.dit and SYSTEM files. Before I wrote this segment I did a reset of the machine to get rid of my administrative privileges.
 
 Use Evil-WinRM to log in to the domain controller as svc_backup.Navigate to C:\Windows\Temp\.
 
