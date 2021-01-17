@@ -30,10 +30,10 @@ I read the article and wanted to try if I could trigger the bug by putting the s
 </html>
 ```
 
-##### [](#header-5)The tested Windows system
+### [](#header-3)The tested Windows system
 The Windows 10 system i tried this on is not a fully updated one, i misses maybe 6 months of updates, including the 20H2 feature update. The machine was running in a Virtualbox environment. 
 
-##### [](#header-5)The crash
+### [](#header-3)The crash
 As described in the original blog post, the bug triggered and a notification in Windows showed that something is wrong and wanted med to do a reboot.
 
 During the reboot, the filesystem repair mechanism was triggered, but in my test it didn't actually destroy the file system. Windows was able to fully boot.  
