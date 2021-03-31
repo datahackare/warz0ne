@@ -124,7 +124,7 @@ SeCreateSymbolicLinkPrivilege           0:35 (0x0:0x23)
 SeDelegateSessionUserImpersonatePrivilege               0:36 (0x0:0x24)
 ```
 
-If this is the case then maybe I can change password for some other users, according to <a href="https://malicious.link/post/2017/reset-ad-user-password-with-linux">mubix blog-post</a>. So I tried changing the password for the high privileged accounts, until I found that it worked on the audit2020 account:
+If this is the case then maybe I can change password for some other users, according to <a href="https://malicious.link/post/2017/reset-ad-user-password-with-linux" target="_blank">mubix blog-post</a>. So I tried changing the password for the high privileged accounts, until I found that it worked on the audit2020 account:
 
 ```
 set userinfo2 audit2020 23 ‘TestTest123!’
@@ -342,7 +342,7 @@ To mount the C: drive as a shadowcopy doesn’t always work with thevssadmin too
 vssadmin create shadow /for=C:
 ```
 
-If this doesn’t work there is a simple script made by <a href="http://0xprashant.github.io">0xprashant</a>
+If this doesn’t work there is a simple script made by <a href="http://0xprashant.github.io" target="_blank">0xprashant</a>
 
 For some reason you have to put a random char at the end of each line because the last char will be deleted?! In my example I put an “r”.
 
@@ -362,7 +362,7 @@ When the disk is mounted, in this case O: you can copy the ntds.dit file with ro
 robocopy.exe "O:\Windows\NTDS" "C:\Windows\Temp" ntds.dit /b
 ```
 
-If this for some reason doesn’t work try <a href="https://github.com/giuliano108/SeBackupPrivilege">this</a> method:
+If this for some reason doesn’t work try <a href="https://github.com/giuliano108/SeBackupPrivilege" target="_blank">this</a> method:
 
 You also need the SYSTEM file from the Registry hive. You can copythe file with robocopy or just save it from the Registry.
 
