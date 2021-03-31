@@ -10,8 +10,8 @@ This is a Cheat sheet with misc stuff that i have collected doing different CTF'
 ### [](#header-3)Local priv esc
 
 A good reference for Windows local priv esc.
- 
-<a href>https://book.hacktricks.xyz/windows/windows-local-privilege-escalation</a>
+
+ <a href="https://book.hacktricks.xyz/windows/windows-local-privilege-escalation" target="_blank">https://book.hacktricks.xyz/windows/windows-local-privilege-escalation</a>
 
 
 ### [](#header-3)Download files
