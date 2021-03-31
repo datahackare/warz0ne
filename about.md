@@ -4,7 +4,7 @@ title: About
 ---
 
 Im just a guy trying to learn pentesting.
-This site is a way for me to save things online so I can go back to look at them later. Im mostly doing CTF's on HackTheBox (<a href="https://app.hackthebox.eu/profile/44591" target="_blank">profile</a>.).
+This site is a way for me to save things online so I can go back to look at them later. Im mostly doing CTF's on HackTheBox (<a href="https://app.hackthebox.eu/profile/44591" target="_blank">profile</a>).
 
 
 
