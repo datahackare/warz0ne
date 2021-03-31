@@ -6,11 +6,11 @@ published: true
 This is bug that is still active in any Windows 10 version running in the wild. This blog-post and the recorded video is a POC that the bug will work in an easy remote setup. I  take no responsibility if you brake any system. This is just for demo purpose in a controlled environment.
 
 ## [](#header-2)The blog post
-Bleeping computer published a <a href="https://www.bleepingcomputer.com/news/security/windows-10-bug-corrupts-your-hard-drive-on-seeing-this-files-icon/">blog post</a> the other day, talking about a bug in Windows 10 that will brake the NTFS partition of any partition that a special string of code was run on.
+Bleeping computer published a <a href="https://www.bleepingcomputer.com/news/security/windows-10-bug-corrupts-your-hard-drive-on-seeing-this-files-icon/" target="_blank">blog post</a> the other day, talking about a bug in Windows 10 that will brake the NTFS partition of any partition that a special string of code was run on.
 
 I recommend reading the full article to get more information about this bug.
 
-Full cred to <a href="https://twitter.com/jonasLyk">Jonas L</a> for disclosing this.
+Full cred to <a href="https://twitter.com/jonasLyk" target="_blank">Jonas L</a> for disclosing this.
 
 ## [](#header-2)Remote POC
 If you want to try this out I strongly recommend doing this in a controlled environment inside a virtual machine. 
