@@ -83,7 +83,7 @@ dir FILEMAME /s /p
 
 ### [](#header-3)Windows set environment
 
-Set env in Windows.
+Set env in Windows. Very useful if you wanna run an application from an unintended location.
 
 ```
 $env:Path += ";C:\Users\username\Documents\Location\"
