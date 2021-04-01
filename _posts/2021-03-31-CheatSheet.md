@@ -301,9 +301,13 @@ misc::cmd
 
 Run LinEnum.sh, linpeas.sh and pspy to get some information about the system and running services.
 
+Download LinEnum.
+
 ```
 git clone https://github.com/rebootuser/LinEnum.git
 ```
+
+Download linpeas.sh.
 
 ```
 git clone https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite.git
