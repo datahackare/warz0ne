@@ -92,7 +92,7 @@ $env:Path += ";C:\Users\username\Documents\Location\"
 
 ### [](#header-3)Disable antivirus and Firewall
 
-Disable antivirus.
+Disable Windows 10 standard antivirus (Windows Essentials) and the build-in-firewall.
 
 ```
 set-mppreference -disablerealtimemonitoring $true
