@@ -2,8 +2,6 @@
 title: Writeup - HackTheBox - Traceback
 published: true
 ---
-![](Pictures/Traceback/logo.png)
-
 Someone did hack this machine before and left a webshell on the
 webserver. I use this webshell to get access to the webadmin user
 account. From the user webadmin I could escalate to the sysadmin
