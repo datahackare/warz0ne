@@ -2,8 +2,6 @@
 title: Writeup - HackTheBox - Blackfield
 published: true
 ---
-![](Pictures/Blackfield/logo.png)
-
 This machine from HackTheBox is categorized as an “hard” Windows machine. From the beginning this machine required some enumeration on SMB to get a list of users of the system. With this list I was able todo a ASREPRoast attack. I got a hash for the user support. This user was able to change the password for the user svc_backup, who was in the Remote Management group. The user was also a member of the Backup Operators. With this knowledge I was able to put the user svc_backup into the administrators group and finally login as the administrator. In the end of this report I will also show an alternative solution where I mount the C: drive as a shadow copy and extract the ntds.dit and SYSTEM files.
 
 ## [](#header-2)Enumeration
