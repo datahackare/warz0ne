@@ -154,8 +154,3 @@ evil-winrm -u administrator -p d0m@in4dminyeah! -i 10.10.10.172
 ![](Pictures/Monteverde/root-flag.png)
 
 Here I got the root.txt flag.
-
-
-I recorded a video to show this.
-
-<iframe id="lbry-iframe" width="560" height="315" src="https://lbry.tv/$/embed/HackTheBox---Monteverde/fe56976c89aefceb32b6a0fac1b43f7132b20c65" allowfullscreen></iframe>
