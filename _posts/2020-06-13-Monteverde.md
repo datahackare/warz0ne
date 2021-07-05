@@ -2,8 +2,6 @@
 title: Writeup - HackTheBox - Monteverde
 published: true
 ---
-![](Pictures/Monteverde/logo.png)
-
 This machine from HackTheBox is categorized as an “medium” Windows
 machine.
 The machine is a Domain Controller. At first i had some problems with with my nmap scans,
