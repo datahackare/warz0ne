@@ -203,4 +203,3 @@ the root.txt flag.
 ![](Pictures/Traceback/root.png)
 
 Here the root.txt flag is blurred out.
-
