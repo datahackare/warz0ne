@@ -395,5 +395,3 @@ evil-winrm -u administrator -H 184fb5e5178480be64824d4cd53b99ee -i10.10.10.192
 ```
 
 ![](Pictures/Blackfield/evil7.png)
-
-<iframe id="lbry-iframe" width="560" height="315" src="https://lbry.tv/$/embed/HackTheBox---Blackfield/741a30ffb1035f0833ef667a70b295f00e48881e" allowfullscreen></iframe>
